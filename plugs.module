@@ -19,6 +19,23 @@ function plugs_menu() {
 // */
 
 /**
+ * Implementation of hook_menu().
+ */
+function plugs_menu() {
+  $items = array();
+
+  $items['admin/settings/plugs'] = array(
+    'title' => 'Plugs',
+    'description' => 'Configure WebGear settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('plugs_settings_form'),
+    'access arguments' => array('administer plugs'),
+  );
+
+  return $items;
+}
+
+/**
  * Implementation of hook_perm().
  */
 function plugs_perm() {
@@ -64,18 +81,72 @@ function plugs_imagecache_default_presets() {
     'presetname' => 'plug',
     'actions' => 
     array (
+      0 => 
       array (
         'weight' => '0',
         'module' => 'imagecache',
-        'action' => 'imagecache_scale_and_crop',
+        'action' => 'imagecache_scale',
         'data' => 
         array (
-          'width' => '269',
-          'height' => '97',
+          'width' => '180',
+          'height' => '100%',
+          'upscale' => 0,
         ),
       ),
     ),
   );
 
   return $presets;
+}
+
+/**
+ *
+ */
+function plugs_settings_form() {
+  $form = array();
+  $view = views_get_view('plugs');
+
+  // Check to see if the view is overridden.
+  if ($view->type == t('Overridden')) {
+    $form['overridden'] = array(
+      '#type' => 'markup',
+      '#value' => '<p>'. t('The plugs view has been overridden, and therefore no settings are available to you here. Instead, you can <a href="!path">edit the view</a> itself to make changes.', array('!path' => url('admin/build/views/edit/plugs'))) .'</p>',
+    );
+    return $form;
+  }
+
+  $options = range(0, 10);
+  unset($options[0]);
+
+  $form['plugs_view_limit'] = array(
+    '#type' => 'select',
+    '#title' => t('Number of items'),
+    '#description' => t('The number of items that should be displayed in the ads block.  If you would like to display more than 10 items, you can <a href="!path">manually edit the view</a>.', array('!path' => url('admin/build/views/edit/plugs'))),
+    '#default_value' => variable_get('plugs_view_limit', 2),
+    '#options' => $options,
+  );
+
+  $form['plugs_view_sort'] = array(
+    '#type' => 'select',
+    '#title' => t('Sorting'),
+    '#description' => t('Select a sorting option.  Ascending and descending sort by post date.  For custom options, please <a href="!path">manually edit the view</a>.', array('!path' => url('admin/build/views/edit/plugs'))),
+    '#default_value' => variable_get('plugs_view_sort', 'random'),
+    '#options' => array(
+      'random' => t('Random'),
+      'ASC' => t('Ascending'),
+      'DESC' => t('Descending'),
+    ),
+  );
+
+  $form = system_settings_form($form);
+  $form['#submit'][] = 'plugs_settings_form_submit';
+
+  return $form;
+}
+
+/**
+ * Submit handler for the plugs settings form.
+ */
+function plugs_settings_form_submit($form, &$form_state) {
+  views_invalidate_cache();
 }
