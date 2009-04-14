@@ -1,4 +1,4 @@
-$content[type]  = array (
+$content['type']  = array (
   'name' => 'Advertisement',
   'type' => 'plug',
   'description' => 'An advertisement for either internal or external content.',
@@ -9,18 +9,89 @@ $content[type]  = array (
   'node_options' => 
   array (
     'status' => true,
-    'revision' => false,
     'promote' => false,
     'sticky' => false,
+    'revision' => false,
   ),
+  'upload' => 1,
+  'nodewords' => 1,
   'old_type' => 'plug',
   'orig_type' => '',
   'module' => 'node',
   'custom' => '1',
   'modified' => '1',
   'locked' => '0',
+  'better_formats_allowed' => 
+  array (
+    1 => false,
+    2 => false,
+    3 => false,
+  ),
+  'better_formats_defaults' => 
+  array (
+    'node-1' => 
+    array (
+      'format' => '0',
+      'weight' => '0',
+    ),
+    'node-2' => 
+    array (
+      'format' => '0',
+      'weight' => '0',
+    ),
+    'node-7' => 
+    array (
+      'format' => '0',
+      'weight' => '25',
+    ),
+    'node-8' => 
+    array (
+      'format' => '0',
+      'weight' => '25',
+    ),
+    'node-10' => 
+    array (
+      'format' => '0',
+      'weight' => '25',
+    ),
+    'node-11' => 
+    array (
+      'format' => '0',
+      'weight' => '25',
+    ),
+    'comment-1' => 
+    array (
+      'format' => '0',
+      'weight' => '0',
+    ),
+    'comment-2' => 
+    array (
+      'format' => '0',
+      'weight' => '0',
+    ),
+    'comment-7' => 
+    array (
+      'format' => '0',
+      'weight' => '25',
+    ),
+    'comment-8' => 
+    array (
+      'format' => '0',
+      'weight' => '25',
+    ),
+    'comment-10' => 
+    array (
+      'format' => '0',
+      'weight' => '25',
+    ),
+    'comment-11' => 
+    array (
+      'format' => '0',
+      'weight' => '25',
+    ),
+  ),
 );
-$content[groups]  = array (
+$content['groups']  = array (
   0 => 
   array (
     'label' => 'Destination',
@@ -56,16 +127,6 @@ $content[groups]  = array (
           'exclude' => 0,
         ),
         3 => 
-        array (
-          'format' => 'fieldset',
-          'exclude' => 0,
-        ),
-        'main' => 
-        array (
-          'format' => 'fieldset',
-          'exclude' => 0,
-        ),
-        'sub' => 
         array (
           'format' => 'fieldset',
           'exclude' => 0,
@@ -120,16 +181,6 @@ $content[groups]  = array (
           'format' => 'fieldset',
           'exclude' => 0,
         ),
-        'main' => 
-        array (
-          'format' => 'fieldset',
-          'exclude' => 0,
-        ),
-        'sub' => 
-        array (
-          'format' => 'fieldset',
-          'exclude' => 0,
-        ),
         'token' => 
         array (
           'format' => 'fieldset',
@@ -142,7 +193,7 @@ $content[groups]  = array (
     'group_name' => 'group_content',
   ),
 );
-$content[fields]  = array (
+$content['fields']  = array (
   0 => 
   array (
     'label' => 'Destination',
@@ -180,6 +231,7 @@ field_external|URL/path',
         'size' => 'big',
         'not null' => false,
         'sortable' => true,
+        'views' => true,
       ),
     ),
     'display_settings' => 
@@ -266,6 +318,8 @@ field_external|URL/path',
       'page' => 'page',
       'webform' => 'webform',
       'plug' => 0,
+      'issue' => false,
+      'publication' => false,
     ),
     'advanced_view' => '--',
     'advanced_view_args' => '',
@@ -474,6 +528,7 @@ field_html|Text/HTML',
         'size' => 'big',
         'not null' => false,
         'sortable' => true,
+        'views' => true,
       ),
     ),
     'display_settings' => 
@@ -567,12 +622,14 @@ field_html|Text/HTML',
         'size' => 'big',
         'not null' => false,
         'sortable' => true,
+        'views' => true,
       ),
       'format' => 
       array (
         'type' => 'int',
         'unsigned' => true,
         'not null' => false,
+        'views' => false,
       ),
     ),
     'display_settings' => 
@@ -619,7 +676,7 @@ field_html|Text/HTML',
   array (
     'label' => 'Image',
     'field_name' => 'field_plug_image',
-    'type' => 'image',
+    'type' => 'filefield',
     'widget_type' => 'imagefield_widget',
     'change' => 'Change basic information',
     'weight' => '12',
@@ -633,15 +690,18 @@ field_html|Text/HTML',
     'alt' => '',
     'custom_title' => 0,
     'title' => '',
+    'use_default_image' => 0,
+    'default_image_upload' => '',
+    'default_image' => NULL,
     'description' => '',
     'group' => 'group_content',
     'required' => 0,
     'multiple' => '0',
-    'list_default' => '1',
-    'force_list_default' => '1',
-    'show_description' => '0',
+    'list_field' => '0',
+    'list_default' => 1,
+    'description_field' => '0',
     'op' => 'Save field settings',
-    'module' => 'imagefield',
+    'module' => 'filefield',
     'widget_module' => 'imagefield',
     'columns' => 
     array (
@@ -664,46 +724,46 @@ field_html|Text/HTML',
     ),
     'display_settings' => 
     array (
-      'weight' => '12',
-      'parent' => 'group_content',
       'label' => 
       array (
-        'format' => 'hidden',
+        'format' => 'above',
+        'exclude' => 0,
       ),
       'teaser' => 
       array (
-        'format' => 'plug_default',
+        'format' => 'image_plain',
         'exclude' => 0,
       ),
       'full' => 
       array (
-        'format' => 'plug_default',
+        'format' => 'image_plain',
         'exclude' => 0,
       ),
       4 => 
       array (
-        'format' => 'default',
+        'format' => 'image_plain',
         'exclude' => 0,
       ),
       2 => 
       array (
-        'format' => 'default',
+        'format' => 'image_plain',
         'exclude' => 0,
       ),
       3 => 
       array (
-        'format' => 'default',
+        'format' => 'image_plain',
         'exclude' => 0,
       ),
       'token' => 
       array (
-        'format' => 'default',
+        'format' => 'image_plain',
         'exclude' => 0,
       ),
     ),
   ),
 );
-$content[extra]  = array (
+$content['extra']  = array (
   'title' => '-5',
   'menu' => '-2',
+  'attachments' => '30',
 );
