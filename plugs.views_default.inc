@@ -52,6 +52,7 @@ function plugs_views_default_views() {
   $handler->override_option('access', array(
     'type' => 'none',
   ));
+  $handler->override_option('title', 'Advertisements');
   $handler->override_option('items_per_page', variable_get('plugs_view_limit', 2));
   $handler->override_option('row_plugin', 'node');
   $handler->override_option('row_options', array(
