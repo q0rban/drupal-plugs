@@ -1,0 +1,50 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ * Installation functions for Plugs.
+ */
+
+/**
+ * Implementation of hook_install().
+ */
+function plugs_install() {
+  // Import our CCK content type and fields.
+  _plugs_import_cck();
+
+  // Only set a pathauto variable if there isn't one already.
+  if (!variable_get('pathauto_node_plug_pattern', FALSE)) {
+    variable_set('pathauto_node_plug_pattern', 'plugs/[title-raw]');
+  }
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function plugs_uninstall() {
+  // Only delete our pathauto variable if it hasn't been changed.
+  if (variable_get('pathauto_node_plug_pattern', 'plugs/[title-raw]') == 'plugs/[title-raw]') {
+    variable_del('pathauto_node_plug_pattern');
+  }
+}
+
+/**
+ * Import the cck file.
+ */
+function _plugs_import_cck() {
+  // Get the file's content
+  $filename = drupal_get_path('module', 'plugs') . '/plugs.cck';
+  $content = implode('', file ($filename));
+  
+  // Build form state
+  $form_state = array(
+    'values' => array(
+      'type_name' => '<create>',
+      'macro' => $content,
+    ),
+  );
+
+  // Inject our form into the CCK Import form.
+  drupal_execute("content_copy_import_form", $form_state);
+}

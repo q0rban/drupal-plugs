@@ -1,0 +1,11 @@
+; $Id$
+name = "Plugs"
+description = "Advertise internal pages or external sites."
+package = WebGear
+version = 6.x-1.0-dev
+core = 6.x
+dependencies[] = imagefield
+dependencies[] = imagecache
+dependencies[] = content
+dependencies[] = nodereference
+dependencies[] = link
