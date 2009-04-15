@@ -18,7 +18,7 @@ function plugs_menu() {
 
   $items['admin/settings/plugs'] = array(
     'title' => 'Plugs',
-    'description' => 'Configure WebGear settings',
+    'description' => 'Configure Advertisement settings',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('plugs_settings_form'),
     'access arguments' => array('administer plugs'),
